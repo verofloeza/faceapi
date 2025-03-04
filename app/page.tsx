@@ -42,15 +42,15 @@ export default function Component() {
       [name]: value
     }))
   }
-  const handleSelfieCapture = useCallback((previewUrl: string, file: File, fbUrl: string) => {
-    setSelfiePreview(previewUrl)
+  // const handleSelfieCapture = useCallback((previewUrl: string, file: File, fbUrl: string) => {
+  //   setSelfiePreview(previewUrl)
     
-    setFormData(prevData => ({
-      ...prevData,
-      selfie: fbUrl
-    }))
-    setIsModalOpen(false)
-  }, [])
+  //   setFormData(prevData => ({
+  //     ...prevData,
+  //     selfie: fbUrl
+  //   }))
+  //   setIsModalOpen(false)
+  // }, [])
 
   const openCamera = useCallback(async () => {
     setIsModalOpen(true)
@@ -226,7 +226,15 @@ export default function Component() {
             <DialogHeader>
               <DialogTitle>Tomar Selfie</DialogTitle>
             </DialogHeader>
-            <Page handleSelfieCapture={handleSelfieCapture} />
+            <Page handleSelfieCapture={(previewUrl, file, firebaseUrl) => {
+                setSelfiePreview(previewUrl)
+                
+                setFormData(prevData => ({
+                  ...prevData,
+                  selfie: firebaseUrl
+                }))
+                setIsModalOpen(false)
+              }} />
           </DialogContent>
         </Dialog>
       </div>
