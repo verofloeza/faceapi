@@ -13,9 +13,6 @@ import Page from '@/components/selfie/page'
 import { firestore } from '@/config/firebase'
 import { addDoc, collection } from 'firebase/firestore'
 
-interface PageProps {
-  handleSelfieCapture: (previewUrl: string, file: File, fbUrl: string) => void;
-}
 
 export default function Component() {
   const [step, setStep] = useState(1)
@@ -45,7 +42,7 @@ export default function Component() {
       [name]: value
     }))
   }
-  const handleSelfieCapture: React.FC<PageProps> = useCallback((previewUrl: string, file: File, fbUrl: string) => {
+  const handleSelfieCapture = useCallback((previewUrl: string, file: File, fbUrl: string) => {
     setSelfiePreview(previewUrl)
     
     setFormData(prevData => ({
