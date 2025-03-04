@@ -116,7 +116,7 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
     return () => clearInterval(interval)
   }, [checkPositionPeriodically])
 
-  const uploadToFirebase = async (file) => {
+  const uploadToFirebase = async (file: File) => {
     try {
 
       // Puedes personalizar la ruta según tus necesidades
