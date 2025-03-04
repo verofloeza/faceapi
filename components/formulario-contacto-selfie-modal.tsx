@@ -1,30 +1,30 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from "@/components/ui/progress"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Camera, Moon, Sun, Info } from 'lucide-react'
 import Image from 'next/image'
 import Page from '@/components/selfie/page'
-import { firestore } from '@/config/firebase'
-import { addDoc, collection } from 'firebase/firestore'
 
-export default function Component() {
+export function FormularioContactoSelfieModal() {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     email: '',
     telefono: '',
     ciudad: '',
     comentarios: '',
-    selfie: '',
+    selfie: null as File | null,
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [selfiePreview, setSelfiePreview] = useState<string | null>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     if (isDarkMode) {
@@ -41,31 +41,50 @@ export default function Component() {
       [name]: value
     }))
   }
-  const handleSelfieCapture = useCallback((previewUrl: string, file: File, fbUrl: string) => {
-    setSelfiePreview(previewUrl)
-    
-    setFormData(prevData => ({
-      ...prevData,
-      selfie: fbUrl
-    }))
+
+  const openCamera = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: "user" } 
+      })
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+        setIsModalOpen(true)
+      }
+    } catch (err) {
+      console.error("Error accessing the camera", err)
+    }
+  }, [])
+
+  const capturePhoto = useCallback(() => {
+    if (videoRef.current && canvasRef.current) {
+      const context = canvasRef.current.getContext('2d')
+      if (context) {
+        context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height)
+        canvasRef.current.toBlob((blob) => {
+          if (blob) {
+            const file = new File([blob], "selfie.jpg", { type: "image/jpeg" })
+            setFormData(prevData => ({
+              ...prevData,
+              selfie: file
+            }))
+            setSelfiePreview(URL.createObjectURL(blob))
+            closeCamera()
+          }
+        }, 'image/jpeg')
+      }
+    }
+  }, [])
+
+  const closeCamera = useCallback(() => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = (videoRef.current.srcObject as MediaStream).getTracks()
+      tracks.forEach(track => track.stop())
+    }
     setIsModalOpen(false)
   }, [])
 
-  const openCamera = useCallback(async () => {
-    setIsModalOpen(true)
-    
-  }, [])
-
-
-  const nextStep = () => {
-    setStep(prevStep => {
-      if (prevStep === 1 && !formData.selfie) {
-        alert('Debes subir una selfie antes de continuar.');
-        return prevStep; 
-      }
-      return Math.min(prevStep + 1, 2);
-    });
-  };
+  const nextStep = () => setStep(prevStep => Math.min(prevStep + 1, 2))
   const prevStep = () => setStep(prevStep => Math.max(prevStep - 1, 1))
 
   const toggleDarkMode = () => {
@@ -75,6 +94,36 @@ export default function Component() {
   const renderStep = () => {
     switch(step) {
       case 1:
+        return (
+          <>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
+              </div>
+              <div>
+                <Label htmlFor="telefono">Teléfono</Label>
+                <Input id="telefono" name="telefono" type="tel" value={formData.telefono} onChange={handleInputChange} required />
+              </div>
+              <div>
+                <Label htmlFor="ciudad">Ciudad</Label>
+                <Input id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} required />
+              </div>
+              <div>
+                <Label htmlFor="comentarios">Comentarios adicionales</Label>
+                <textarea
+                  id="comentarios"
+                  name="comentarios"
+                  value={formData.comentarios}
+                  onChange={handleInputChange}
+                  className="w-full h-32 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-gray-700"
+                  placeholder="Escribe tus comentarios aquí..."
+                />
+              </div>
+            </div>
+          </>
+        )
+      case 2:
         return (
           <>
             <div className="space-y-6">
@@ -125,57 +174,17 @@ export default function Component() {
               </div>
             </div>
           </>
-          
-        )
-      case 2:
-        return (
-          <>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <Label htmlFor="telefono">Teléfono</Label>
-                <Input id="telefono" name="telefono" type="tel" value={formData.telefono} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <Label htmlFor="ciudad">Ciudad</Label>
-                <Input id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <Label htmlFor="comentarios">Comentarios adicionales</Label>
-                <textarea
-                  id="comentarios"
-                  name="comentarios"
-                  value={formData.comentarios}
-                  onChange={handleInputChange}
-                  className="w-full h-32 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-gray-700"
-                  placeholder="Escribe tus comentarios aquí..."
-                />
-              </div>
-            </div>
-          </>
         )
       default:
         return null
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.email || !formData.telefono || !formData.ciudad) {
-      alert('Por favor, completa el email, teléfono y ciudad antes de enviar.');
-      return;
-    }
-    try {
-      await addDoc(collection(firestore, 'formularios'), formData);
-
-    } catch (error) {
-      console.error('Error al guardar el formulario:', error);
-      alert('Hubo un error al enviar el formulario.');
-    }
-  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log('Formulario enviado:', formData)
+    // Aquí puedes agregar la lógica para enviar los datos a tu backend
+  }
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
@@ -187,7 +196,7 @@ export default function Component() {
                 {`PASO ${step}`}
               </CardTitle>
               <p className="text-muted-foreground">
-                {step === 1 ? 'Tomar Selfie' : 'Información de Contacto'}
+                {step === 1 ? 'Información de Contacto' : 'Tomar Selfie'}
               </p>
             </div>
             <Button variant="outline" size="icon" onClick={toggleDarkMode}>
@@ -220,11 +229,25 @@ export default function Component() {
         </Card>
 
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <DialogContent className="max-w-3xl w-full h-auto max-h-screen md:h-[100vh] sm:h-[90vh]">
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>Tomar Selfie</DialogTitle>
+              <DialogDescription>
+                Asegúrate de que tu rostro esté bien iluminado y centrado en la imagen.
+              </DialogDescription>
             </DialogHeader>
-            <Page handleSelfieCapture={handleSelfieCapture} />
+            <div className="relative">
+              <video ref={videoRef} autoPlay className="w-full rounded-lg" />
+            </div>
+            <div className="flex justify-between">
+              <Button type="button" variant="outline" onClick={closeCamera}>
+                Cancelar
+              </Button>
+              <Button type="button" onClick={capturePhoto}>
+                Capturar Foto
+              </Button>
+            </div>
+            <Page />
           </DialogContent>
         </Dialog>
       </div>
