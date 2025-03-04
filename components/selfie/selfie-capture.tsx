@@ -9,7 +9,7 @@ import { storage } from "@/config/firebase"
 
 
 interface SelfieCaptureProps {
-  handleSelfieCapture: (previewUrl: string, file: File) => void;
+  handleSelfieCapture: (previewUrl: string, file: File, firebaseUrl: string) => void;
 }
 
 type FacePosition = {
