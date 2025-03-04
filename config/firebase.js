@@ -12,12 +12,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-let firestore
-let storage
+const firestore = getFirestore(app);
+const storage = getStorage(app);
 
-if (typeof window !== 'undefined') {
-    firestore = getFirestore(app)
-    storage = getStorage(app);
-}
-
-export { app, storage, firestore };
+export { app, firestore, storage };
