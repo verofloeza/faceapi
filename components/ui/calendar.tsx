@@ -1,7 +1,4 @@
-"use client"
-
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
@@ -53,11 +50,7 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        // Usamos previousMonthButton y nextMonthButton para personalizar la navegación
-        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
-        IconRight: () => <ChevronRight className="h-4 w-4" />,
-      }}
+      // Remove the components prop entirely
       {...props}
     />
   )
