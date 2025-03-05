@@ -54,15 +54,15 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        // Reemplazamos IconLeft y IconRight con previousButton y nextButton
-        previousButton: () => <ChevronLeft className="h-4 w-4" />,
+        // Reemplazar iconos de navegación con botones correctos
+        prevButton: () => <ChevronLeft className="h-4 w-4" />,
         nextButton: () => <ChevronRight className="h-4 w-4" />,
       }}
       {...props}
     />
   )
 }
+
 Calendar.displayName = "Calendar"
 
 export { Calendar }
-
