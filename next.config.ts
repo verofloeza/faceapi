@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
+      use: [ 'css-loader'],
     });
     return config;
   },
