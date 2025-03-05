@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog"
 
 interface FormData {
   id: string
-  nombre: string
+  email: string
   ciudad: string
   telefono: string
   comentarios: string
