@@ -54,9 +54,9 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        // Reemplazar iconos de navegación con botones correctos
-        prevButton: () => <ChevronLeft className="h-4 w-4" />,
-        nextButton: () => <ChevronRight className="h-4 w-4" />,
+        // Usamos previousMonthButton y nextMonthButton para personalizar la navegación
+        previousMonthButton: () => <ChevronLeft className="h-4 w-4" />,
+        nextMonthButton: () => <ChevronRight className="h-4 w-4" />,
       }}
       {...props}
     />
