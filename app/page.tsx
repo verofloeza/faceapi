@@ -11,7 +11,7 @@ import { Camera, Moon, Sun, Info } from 'lucide-react'
 import Image from 'next/image'
 import Page from '@/components/selfie/page'
 import { firestore } from '@/config/firebase'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 
 
 export default function Component() {
@@ -26,6 +26,7 @@ export default function Component() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [selfiePreview, setSelfiePreview] = useState<string | null>(null)
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -171,8 +172,11 @@ export default function Component() {
     }
     try {
 
-      await addDoc(collection(firestore, 'formularios'), formData);
-
+      await addDoc(collection(firestore, 'formularios'), {
+        ...formData,
+        createdAt: serverTimestamp() 
+      });
+      setIsSubmitted(true);
     } catch (error) {
       console.error('Error al guardar el formulario:', error);
       alert('Hubo un error al enviar el formulario.');
@@ -183,6 +187,15 @@ export default function Component() {
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <div className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-gray-900">
         <Card className="w-full max-w-lg mx-auto">
+          {isSubmitted ? (
+            <div className="p-8 text-center">
+              <h2 className="text-2xl font-bold">¡Gracias por enviar el formulario!</h2>
+              <p className="text-muted-foreground mt-2">
+                Hemos recibido tu información y nos pondremos en contacto contigo pronto.
+              </p>
+            </div>
+          ) : ( 
+            <>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-2xl font-bold">
@@ -219,6 +232,8 @@ export default function Component() {
               </Button>
             )}
           </CardFooter>
+          </>
+        )}
         </Card>
 
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

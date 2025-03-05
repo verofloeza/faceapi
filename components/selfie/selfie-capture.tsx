@@ -140,8 +140,12 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
   // Modificación de la función handleCapture para incluir la subida a Firebase
   const handleCapture = useCallback(async () => {
     if (!webcamRef.current) return;
+    const video = webcamRef.current.video;
+      if (!video) return;
+
+      const { videoWidth, videoHeight } = video;
   
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc = webcamRef.current.getScreenshot({ width: videoWidth, height: videoHeight });
     if (!imageSrc) return;
   
     // Convertir la base64 a Blob
@@ -212,6 +216,7 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
                 onUserMedia={handleUserMedia}
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ transform: "scaleX(-1)" }}
+                screenshotQuality={1}
                 videoConstraints={{
                   facingMode: "user",
                   width: { ideal: 1280 },
