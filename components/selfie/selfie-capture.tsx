@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {  ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/config/firebase"
-
+import Image from 'next/image';
 
 interface SelfieCaptureProps {
   handleSelfieCapture: (previewUrl: string, file: File, firebaseUrl: string) => void;
@@ -205,6 +205,13 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
 
   return (
     <div className="fixed inset-0 bg-sky-100 flex items-center justify-center p-4">
+      <Image
+        className="w-full max-w-[100px] xs:max-w-[100px]"
+        src='/logo.png'
+        alt="Look Lens"
+        width="140" 
+        height="20"
+                />
       <Card className="relative w-full max-w-sm bg-white rounded-3xl p-4">
         <div className="flex flex-col items-center gap-4 pt-8">
           <div className="relative">
