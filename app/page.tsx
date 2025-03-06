@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from "@/components/ui/progress"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Camera, Moon, Sun, Info } from 'lucide-react'
+import { Camera,  Info } from 'lucide-react'
 import Image from 'next/image'
 import Page from '@/components/selfie/page'
 import { firestore } from '@/config/firebase'
@@ -70,9 +70,9 @@ export default function Component() {
   };
   const prevStep = () => setStep(prevStep => Math.max(prevStep - 1, 1))
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => !prevMode)
-  }
+  // const toggleDarkMode = () => {
+  //   setIsDarkMode(prevMode => !prevMode)
+  // }
 
   const renderStep = () => {
     switch(step) {
@@ -184,8 +184,17 @@ export default function Component() {
   };
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
+    <div className={'dark'}>
       <div className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-gray-900">
+        <div className="flex justify-center mb-8">
+          <Image
+            className="w-full max-w-[200px] xs:max-w-[200px]"
+            src="/logo.png"
+            alt="Look Lens"
+            width={140} 
+            height={20}
+          />
+        </div>
         <Card className="w-full max-w-lg mx-auto">
           {isSubmitted ? (
             <div className="p-8 text-center">
@@ -205,10 +214,6 @@ export default function Component() {
                 {step === 1 ? 'Tomar Selfie' : 'Información de Contacto'}
               </p>
             </div>
-            <Button variant="outline" size="icon" onClick={toggleDarkMode}>
-              {isDarkMode ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
-              <span className="sr-only">Cambiar tema</span>
-            </Button>
           </CardHeader>
           <CardContent>
             <Progress value={(step / 2) * 100} className="mt-2 mb-4" />

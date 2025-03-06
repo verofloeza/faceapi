@@ -2,6 +2,9 @@
 
 import { FormDataTable } from "@/components/pedidos/form-data-table";
 import { useAuth } from "@/context/AuthContext";
+import { Button } from "antd";
+import { LogOut } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 
@@ -26,11 +29,42 @@ const Pedidos = () =>{
     if (!user) return null;
 
     return (
-        <main className="container mx-auto py-10 px-4">
-          <button onClick={logout}>Cerrar Sesión</button>
-          <h1 className="text-3xl font-bold mb-8 text-center">Gestión de Formularios</h1>
+      <div className="dark">
+      <main className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-gray-900 min-h-screen">
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex-1">
+            <Button 
+              variant="outline" 
+              onClick={logout} 
+              className="dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              Cerrar Sesión
+            </Button>
+          </div>
+          
+          <div className="flex-1 flex justify-center">
+            <Image
+              className="w-full max-w-[200px] xs:max-w-[200px]"
+              src="/logo.png"
+              alt="Look Lens"
+              width={140} 
+              height={20}
+            />
+          </div>
+          
+          <div className="flex-1"></div>
+        </div>
+        
+        <h1 className="text-2xl font-bold mb-8 text-center dark:text-white">
+          Gestión de Formularios
+        </h1>
+        
+        <div className="dark:bg-gray-800 rounded-lg p-6">
           <FormDataTable />
-        </main>
+        </div>
+      </main>
+    </div>
       )
 }
 

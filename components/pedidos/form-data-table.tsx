@@ -89,88 +89,98 @@ export function FormDataTable() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Datos de Formularios</h2>
+        <h2 className="text-xl font-semibold dark:text-white">Datos de Formularios</h2>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={refreshData} disabled={loading}>
-            {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <RefreshCw className="h-4 w-4 mr-2" />}
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={refreshData} 
+            disabled={loading}
+            className="dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white"
+          >
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+            ) : (
+              <RefreshCw className="h-4 w-4 mr-2" />
+            )}
             Actualizar
           </Button>
         </div>
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
+        <div className="flex justify-center items-center h-64 dark:text-white">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
           <span className="ml-2">Cargando datos...</span>
         </div>
       ) : formData.length === 0 ? (
-        <div className="text-center py-10 border rounded-lg">
+        <div className="text-center py-10 border rounded-lg dark:border-gray-700 dark:text-gray-400">
           <p className="text-muted-foreground">No hay datos de formularios disponibles.</p>
         </div>
       ) : (
-        <div className="border rounded-lg overflow-hidden">
+        <div className="border rounded-lg overflow-hidden dark:border-gray-700">
           <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead>Ciudad</TableHead>
-                <TableHead>Teléfono</TableHead>
-                <TableHead>Comentarios</TableHead>
-                <TableHead>Selfie</TableHead>
-                <TableHead>Estado</TableHead>
+            <TableHeader className="dark:bg-gray-800">
+              <TableRow className="dark:border-gray-700">
+                <TableHead className="dark:text-gray-300">Email</TableHead>
+                <TableHead className="dark:text-gray-300">Ciudad</TableHead>
+                <TableHead className="dark:text-gray-300">Teléfono</TableHead>
+                <TableHead className="dark:text-gray-300">Comentarios</TableHead>
+                <TableHead className="dark:text-gray-300">Selfie</TableHead>
+                <TableHead className="dark:text-gray-300">Estado</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {formData.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.email}</TableCell>
-                  <TableCell>{item.ciudad}</TableCell>
-                  <TableCell>{item.telefono}</TableCell>
-                  <TableCell className="max-w-[200px] truncate">{item.comentarios}</TableCell>
+                <TableRow key={item.id} className="dark:border-gray-700">
+                  <TableCell className="font-medium dark:text-white">{item.email}</TableCell>
+                  <TableCell className="dark:text-gray-300">{item.ciudad}</TableCell>
+                  <TableCell className="dark:text-gray-300">{item.telefono}</TableCell>
+                  <TableCell className="max-w-[200px] truncate dark:text-gray-300">{item.comentarios}</TableCell>
                   <TableCell>
                     {item.selfie ? (
                       <Dialog>
-                      <DialogTrigger asChild>
-                        <div className="relative h-12 w-12 rounded-md overflow-hidden cursor-pointer">
-                          <Image
-                            src={item.selfie || "/placeholder.svg"}
-                            alt={`Selfie de ${item.email}`}
-                            fill
-                            className="object-cover hover:scale-110 transition-transform"
-                          />
-                        </div>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-lg p-4">
-                        <DialogTitle className="sr-only">Selfie de {item.email}</DialogTitle>
-                        <div className="relative w-full max-w-[500px] mx-auto">
+                        <DialogTrigger asChild>
+                          <div className="relative h-12 w-12 rounded-md overflow-hidden cursor-pointer border dark:border-gray-600">
                             <Image
-                            src={item.selfie}
-                            alt={`Selfie de ${item.email}`}
-                            width={500}
-                            height={500}
-                            quality={100} // Aumenta la calidad de la imagen
-                            className="rounded-lg object-cover"
+                              src={item.selfie || "/placeholder.svg"}
+                              alt={`Selfie de ${item.email}`}
+                              fill
+                              className="object-cover hover:scale-110 transition-transform"
                             />
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-lg p-4 dark:bg-gray-800 dark:border-gray-700">
+                          <DialogTitle className="sr-only">Selfie de {item.email}</DialogTitle>
+                          <div className="relative w-full max-w-[500px] mx-auto">
+                            <Image
+                              src={item.selfie}
+                              alt={`Selfie de ${item.email}`}
+                              width={500}
+                              height={500}
+                              quality={100}
+                              className="rounded-lg object-cover"
+                            />
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     ) : (
-                      <div className="h-12 w-12 bg-muted rounded-md flex items-center justify-center text-xs text-muted-foreground">
+                      <div className="h-12 w-12 bg-muted dark:bg-gray-700 rounded-md flex items-center justify-center text-xs text-muted-foreground dark:text-gray-400">
                         No imagen
                       </div>
                     )}
                   </TableCell>
                   <TableCell>
                     <select
-                        value={item.estado}
-                        onChange={(e) => toggleEstado(item.id, e.target.value)}
-                        className="border rounded px-2 py-1 text-sm"
+                      value={item.estado}
+                      onChange={(e) => toggleEstado(item.id, e.target.value)}
+                      className="border rounded px-2 py-1 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     >
-                        {estados.map((estado) => (
+                      {estados.map((estado) => (
                         <option key={estado} value={estado}>
-                            {estado}
+                          {estado}
                         </option>
-                        ))}
+                      ))}
                     </select>
                   </TableCell>
                 </TableRow>
