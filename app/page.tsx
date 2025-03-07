@@ -88,9 +88,12 @@ export default function Component() {
                     type="button" 
                     variant="outline" 
                     onClick={openCamera}
-                    className="w-full max-w-xs py-9 text-lg bg-[#25D366] text-white hover:bg-[#1DA851] transition-all"
+                    className="w-full max-w-xs py-9 text-lg bg-[#39A132] text-white hover:bg-[#1DA851] transition-all text-xl"
                   >
-                    <Camera className="mr-2 h-5 w-5" /> Tomar Selfie
+                   <div className="flex items-center justify-center">
+                      <Camera style={{width: '24px', height: '24px', minWidth: '24px', minHeight: '24px'}} className="mr-2" />
+                      <span>Tomar Selfie</span>
+                    </div>
                   </Button>
                 </div>
               </div>
