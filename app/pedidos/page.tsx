@@ -29,8 +29,8 @@ const Pedidos = () =>{
     if (!user) return null;
 
     return (
-      <div className="dark">
-      <main className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-gray-900 min-h-screen">
+      <div className="min-h-screen bg-neutral-700 dark">
+      <main className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-neutral-700 min-h-screen">
         <div className="flex justify-between items-center mb-8">
           <div className="flex-1">
             <Button 
