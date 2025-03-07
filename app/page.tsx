@@ -121,7 +121,7 @@ export default function Component() {
                     </div>
                   )}
                 </div>
-                <p className="mt-4 text-center">¿Estás conforme con esta selfie? Si no, puedes volver atrás y tomar otra.</p>
+                <p className="mt-4 text-center text-xl">¿Estás conforme con esta selfie? Si no, puedes volver atrás y tomar otra.</p>
               </div>
             </div>
           </>

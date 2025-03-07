@@ -2,7 +2,6 @@
 
 import { useState, useRef, useCallback, useEffect } from "react"
 import Webcam from "react-webcam"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {  ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/config/firebase"
@@ -203,8 +202,11 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
   )
 
   return (
-    <div className="fixed inset-0 bg-sky-100 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-white flex items-center justify-center p-4">
       <Card className="relative w-full max-w-sm bg-white rounded-3xl p-4">
+      <div className="text-center space-y-4">
+            <p className="text-gray-700 font-medium min-h-[1.5rem] text-xl">{message}</p>
+          </div>
         <div className="flex flex-col items-center gap-4 pt-8">
           <div className="relative">
             <div className="w-64 h-80 relative overflow-hidden rounded-[40px]">
@@ -246,16 +248,7 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
             </div>
           </div>
 
-          <div className="text-center space-y-4">
-            <p className="text-gray-700 font-medium min-h-[1.5rem]">{message}</p>
-            <Button
-              className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-full py-6"
-              disabled={!isCentered || !isWellLit || countdown !== null}
-              onClick={() => setCountdown(3)}
-            >
-              Tomar foto
-            </Button>
-          </div>
+         
         </div>
       </Card>
       <canvas ref={canvasRef} style={{ display: "none" }} />
