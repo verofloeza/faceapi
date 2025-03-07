@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from "@/components/ui/progress"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Camera,  Info } from 'lucide-react'
+import { Camera } from 'lucide-react'
 import Image from 'next/image'
 import Page from '@/components/selfie/page'
 import { firestore } from '@/config/firebase'
@@ -42,6 +42,7 @@ export default function Component() {
       selfie: fbUrl
     }))
     setIsModalOpen(false)
+    setStep(2)
   }, [])
 
   const openCamera = useCallback(async () => {
@@ -56,7 +57,7 @@ export default function Component() {
         alert('Debes subir una selfie antes de continuar.');
         return prevStep; 
       }
-      return Math.min(prevStep + 1, 2);
+      return Math.min(prevStep + 1, 3);
     });
   };
   const prevStep = () => setStep(prevStep => Math.max(prevStep - 1, 1))
@@ -75,13 +76,11 @@ export default function Component() {
                 <Label htmlFor="selfie">Tomar Selfie</Label>
                 <div className="mt-2 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">Guía para tomar una buena selfie:</h3>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Asegúrate de estar en un lugar bien iluminado</li>
-                    <li>Mantén la cámara a la altura de los ojos</li>
+                  <ul className="list-disc pl-5 space-y-1 text-lg">
+                    <li>Buena iluminación</li>
+                    <li>Cámara frente al rostro</li>
                     <li>Mira directamente a la cámara</li>
-                    <li>Sonríe de forma natural</li>
-                    <li>Evita fondos desordenados o distractores</li>
-                    <li>Asegúrate de que tu rostro esté completamente visible</li>
+                    <li>Rostro completamente visible</li>
                   </ul>
                 </div>
                 <div className="flex justify-center mt-6">
@@ -94,23 +93,16 @@ export default function Component() {
                     <Camera className="mr-2 h-5 w-5" /> Tomar Selfie
                   </Button>
                 </div>
-                {formData.selfie && (
-                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                    Selfie capturado
-                  </p>
-                )}
               </div>
-              
             </div>
           </>
-          
         )
       case 2:
         return (
           <>
             <div className="space-y-4">
-            <div>
-                <Label>Información Importante</Label>
+              <div>
+                <Label>Tu Selfie</Label>
                 <div className="mt-2 relative">
                   {selfiePreview ? (
                     <Image
@@ -125,9 +117,22 @@ export default function Component() {
                       <p className="text-gray-500 dark:text-gray-400">No se ha tomado ninguna selfie aún</p>
                     </div>
                   )}
-                  <div className="absolute top-2 right-2 bg-white dark:bg-neutral-800 rounded-full p-2">
-                    <Info className="h-6 w-6 text-blue-500" />
-                  </div>
+                </div>
+                <p className="mt-4 text-center">¿Estás conforme con esta selfie? Si no, puedes volver atrás y tomar otra.</p>
+              </div>
+            </div>
+          </>
+        )
+      case 3:
+        return (
+          <>
+            <div className="space-y-4">
+              <div>
+                <Label>Información de Contacto</Label>
+                <div className="mt-2 mb-4">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Por favor completa la siguiente información para continuar.
+                  </p>
                 </div>
               </div>
               <div>
@@ -181,8 +186,8 @@ export default function Component() {
   };
 
   return (
-    <div className={'dark'}>
-      <div className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-neutral-700">
+    <div  className="min-h-screen bg-neutral-700 dark">
+      <div className="container mx-auto py-4 px-4 transition-colors duration-200 ease-in-out dark:bg-neutral-700">
         <div className="flex justify-center mb-8">
           <Image
             className="w-full max-w-[200px] xs:max-w-[200px]"
@@ -202,40 +207,46 @@ export default function Component() {
             </div>
           ) : ( 
             <>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-              <CardTitle className="text-2xl font-bold">
-                {`PASO ${step}`}
-              </CardTitle>
-              <p className="text-muted-foreground">
-                {step === 1 ? 'Tomar Selfie' : 'Información de Contacto'}
-              </p>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <Progress value={(step / 2) * 100} className="mt-2 mb-4" />
-            <form onSubmit={handleSubmit} className="mt-4">
-              {renderStep()}
-            </form>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            {step > 1 && (
-              <Button type="button" variant="outline" onClick={prevStep}>
-                Anterior
-              </Button>
-            )}
-            {step < 2 ? (
-              <Button type="button" onClick={nextStep}>
-                Siguiente
-              </Button>
-            ) : (
-              <Button type="submit" onClick={handleSubmit}>
-                Enviar
-              </Button>
-            )}
-          </CardFooter>
-          </>
-        )}
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-2xl font-bold">
+                    {`PASO ${step} DE 3`}
+                  </CardTitle>
+                  <p className="text-muted-foreground">
+                    {step === 1 ? 'Tomar Selfie' : 
+                     step === 2 ? 'Revisar Selfie' : 
+                     'Información de Contacto'}
+                  </p>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Progress value={(step / 3) * 100} className="mb-2" />
+                <form onSubmit={handleSubmit} className="mt-4">
+                  {renderStep()}
+                </form>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                {step > 1 && (
+                  <Button type="button" variant="outline" onClick={prevStep}>
+                    Anterior
+                  </Button>
+                )}
+                {step < 3 ? (
+                  <Button 
+                    type="button" 
+                    onClick={nextStep}
+                    disabled={step === 1 && !formData.selfie}
+                  >
+                    Siguiente
+                  </Button>
+                ) : (
+                  <Button type="submit" onClick={handleSubmit}>
+                    Enviar
+                  </Button>
+                )}
+              </CardFooter>
+            </>
+          )}
         </Card>
 
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
