@@ -179,7 +179,8 @@ export default function Component() {
 
       await addDoc(collection(firestore, 'formularios'), {
         ...formData,
-        createdAt: serverTimestamp() 
+        createdAt: serverTimestamp(),
+        active: true 
       });
       setIsSubmitted(true);
     } catch (error) {

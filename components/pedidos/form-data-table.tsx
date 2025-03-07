@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { Loader2, RefreshCw } from "lucide-react"
-import { collection, getDocs, updateDoc, doc, onSnapshot, query, orderBy } from "firebase/firestore"
+import { Loader2, RefreshCw, Trash } from "lucide-react"
+import { collection, getDocs, updateDoc, doc, onSnapshot, query, orderBy, where } from "firebase/firestore"
 import Image from "next/image"
 import { firestore } from "@/config/firebase"
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog"
@@ -26,31 +26,31 @@ export function FormDataTable() {
   const estados = ["Nueva Solicitud", "Iniciado", "Terminado", "Entregado", "Cancelado"];
 
   useEffect(() => {
-    const formCollectionRef = collection(firestore, "formularios")
-    // const q = query(formCollectionRef, orderBy("createdAt", "desc"))
-    const q = query(formCollectionRef)
-
+    const formCollectionRef = collection(firestore, "formularios");
+    const q = query(
+      formCollectionRef,
+      where("active", "!=", false), 
+      orderBy("createdAt", "desc")
+    );
+  
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const formDataList: FormData[] = []
-      snapshot.forEach((doc) => {
-        const data = doc.data()
-        formDataList.push({
-          id: doc.id,
-          email: data.email || "",
-          ciudad: data.ciudad || "",
-          telefono: data.telefono || "",
-          comentarios: data.comentarios || "",
-          selfie: data.selfie || "",
-          estado: data.estado || "",
-          createdAt: data.createdAt,
-        })
-      })
-      setFormData(formDataList)
-      setLoading(false)
-    })
-
-    return () => unsubscribe()
-  }, [])
+      const formDataList: FormData[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        email: doc.data().email || "",
+        ciudad: doc.data().ciudad || "",
+        telefono: doc.data().telefono || "",
+        comentarios: doc.data().comentarios || "",
+        selfie: doc.data().selfie || "",
+        estado: doc.data().estado || "",
+        createdAt: doc.data().createdAt,
+      }));
+      
+      setFormData(formDataList);
+      setLoading(false);
+    });
+  
+    return () => unsubscribe();
+  }, []);
 
   const toggleEstado = async (id: string, nuevoEstado: string) => {
     try {
@@ -64,7 +64,7 @@ export function FormDataTable() {
   const refreshData = async () => {
     setLoading(true)
     const formCollectionRef = collection(firestore, "formularios")
-    const q = query(formCollectionRef, orderBy("createdAt", "desc"))
+    const q = query(formCollectionRef, where('active', '!=', false), orderBy("createdAt", "desc"))
     const querySnapshot = await getDocs(q)
 
     const formDataList: FormData[] = []
@@ -85,6 +85,21 @@ export function FormDataTable() {
     setFormData(formDataList)
     setLoading(false)
   }
+
+  const handleDelete = async (itemId: string) => {
+    const isConfirmed = window.confirm("¿Seguro que quieres borrar este elemento?");
+    if (!isConfirmed) return;
+  
+    try {
+      const formRef = doc(firestore, "formularios", itemId);
+      await updateDoc(formRef, { active: false });
+      console.log("Elemento eliminado:", itemId);
+      alert("Elemento eliminado correctamente"); // Opcional: Feedback para el usuario
+    } catch (error) {
+      console.error("Error al eliminar el elemento:", error);
+      alert("Ocurrió un error al eliminar el elemento"); // Opcional: Notificar al usuario
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -128,6 +143,7 @@ export function FormDataTable() {
                 <TableHead className="dark:text-gray-300">Comentarios</TableHead>
                 <TableHead className="dark:text-gray-300">Selfie</TableHead>
                 <TableHead className="dark:text-gray-300">Estado</TableHead>
+                <TableHead className="dark:text-gray-300 text-right">Acción</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -182,6 +198,11 @@ export function FormDataTable() {
                         </option>
                       ))}
                     </select>
+                  </TableCell>
+                  <TableCell>
+                  <Button variant="destructive" size="sm" onClick={() => handleDelete(item.id)}>
+                    <Trash className="w-4 h-4 mr-1" /> Borrar
+                  </Button>
                   </TableCell>
                 </TableRow>
               ))}
