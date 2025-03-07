@@ -236,9 +236,11 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
               </svg>
               {/* Temporizador */}
               {countdown !== null && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl font-bold text-white drop-shadow-lg">Mire a la cámara</span>
-                  <span className="text-6xl font-bold text-white drop-shadow-lg">{countdown}</span>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center gap-4">
+                    <span className="text-6xl font-bold text-white drop-shadow-lg">{countdown}</span>
+                    <span className="font-bold text-white drop-shadow-lg">Mire a la cámara</span>
+                  </div>
                 </div>
               )}
             </div>
