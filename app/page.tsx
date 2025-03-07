@@ -76,7 +76,7 @@ export default function Component() {
                 <Label htmlFor="selfie">Tomar Selfie</Label>
                 <div className="mt-2 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">Guía para tomar una buena selfie:</h3>
-                  <ul className="list-disc pl-5 space-y-1 text-lg">
+                  <ul className="list-disc pl-5 space-y-1 text-xl">
                     <li>Buena iluminación</li>
                     <li>Cámara frente al rostro</li>
                     <li>Mira directamente a la cámara</li>
