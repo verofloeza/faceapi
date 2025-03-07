@@ -87,7 +87,7 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
       setIsCentered(result.isCentered)
       const lightingOk = checkLighting()
       if (result.isCentered && lightingOk) {
-        setMessage("¡Posición e iluminación adecuadas! Mire a la cámara")
+        setMessage("¡Posición e iluminación adecuadas!")
         if (countdown === null) {
           setCountdown(3)
         }
@@ -237,6 +237,7 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
               {/* Temporizador */}
               {countdown !== null && (
                 <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-6xl font-bold text-white drop-shadow-lg">Mire a la cámara</span>
                   <span className="text-6xl font-bold text-white drop-shadow-lg">{countdown}</span>
                 </div>
               )}
