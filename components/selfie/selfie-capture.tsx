@@ -87,7 +87,7 @@ export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCa
       setIsCentered(result.isCentered)
       const lightingOk = checkLighting()
       if (result.isCentered && lightingOk) {
-        setMessage("¡Posición e iluminación adecuadas!")
+        setMessage("¡Posición e iluminación adecuadas! Mire a la cámara")
         if (countdown === null) {
           setCountdown(3)
         }
