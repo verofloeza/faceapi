@@ -82,7 +82,7 @@ export default function Component() {
             <div className="space-y-6">
               <div>
                 <Label htmlFor="selfie">Tomar Selfie</Label>
-                <div className="mt-2 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <div className="mt-2 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
                   <h3 className="text-lg font-semibold mb-2">Guía para tomar una buena selfie:</h3>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Asegúrate de estar en un lugar bien iluminado</li>
@@ -116,11 +116,11 @@ export default function Component() {
                       className="rounded-lg"
                     />
                   ) : (
-                    <div className="bg-gray-200 dark:bg-gray-700 rounded-lg w-full h-[300px] flex items-center justify-center">
+                    <div className="bg-neutral-200 dark:bg-neutral-700 rounded-lg w-full h-[300px] flex items-center justify-center">
                       <p className="text-gray-500 dark:text-gray-400">No se ha tomado ninguna selfie aún</p>
                     </div>
                   )}
-                  <div className="absolute top-2 right-2 bg-white dark:bg-gray-800 rounded-full p-2">
+                  <div className="absolute top-2 right-2 bg-white dark:bg-neutral-800 rounded-full p-2">
                     <Info className="h-6 w-6 text-blue-500" />
                   </div>
                 </div>
@@ -152,7 +152,7 @@ export default function Component() {
                   name="comentarios"
                   value={formData.comentarios}
                   onChange={handleInputChange}
-                  className="w-full h-32 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-gray-700"
+                  className="w-full h-32 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-neutral-700"
                   placeholder="Escribe tus comentarios aquí..."
                 />
               </div>
@@ -185,7 +185,7 @@ export default function Component() {
 
   return (
     <div className={'dark'}>
-      <div className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-gray-900">
+      <div className="container mx-auto py-8 px-4 transition-colors duration-200 ease-in-out dark:bg-neutral-700">
         <div className="flex justify-center mb-8">
           <Image
             className="w-full max-w-[200px] xs:max-w-[200px]"
