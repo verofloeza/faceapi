@@ -18,7 +18,9 @@ type FacePosition = {
 export default function SelfieCaptureComponent({ handleSelfieCapture }: SelfieCaptureProps) {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isCentered, setIsCentered] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isWellLit, setIsWellLit] = useState(false)
   const [message, setMessage] = useState("Centra tu rostro")
   const [isChecking, setIsChecking] = useState(false)
