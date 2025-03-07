@@ -34,7 +34,7 @@ const Pedidos = () =>{
         <div className="flex justify-between items-center mb-8">
           <div className="flex-1">
             <Button 
-              variant="outline" 
+              variant="outlined" 
               onClick={logout} 
               className="dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
             >
