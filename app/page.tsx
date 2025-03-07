@@ -17,9 +17,11 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 export default function Component() {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
+    nombre:'',
     email: '',
     telefono: '',
     ciudad: '',
+    orden:'',
     comentarios: '',
     selfie: '',
   })
@@ -139,16 +141,19 @@ export default function Component() {
                 </div>
               </div>
               <div>
-                {/* <Label htmlFor="email" className='text-lg'>Email</Label> */}
+                <Input id="nombre" name="nombre" type="text" value={formData.nombre} onChange={handleInputChange} required className='text-lg' placeholder='Nombre' />
+              </div>
+              <div>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required className='text-lg' placeholder='Email' />
               </div>
               <div>
-                {/* <Label htmlFor="telefono" className='text-lg'>Teléfono</Label> */}
                 <Input id="telefono" name="telefono" type="tel" value={formData.telefono} onChange={handleInputChange} required className='text-lg' placeholder='Teléfono' />
               </div>
               <div>
-                {/* <Label htmlFor="ciudad" className='text-lg'>Ciudad</Label> */}
                 <Input id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} required className='text-lg' placeholder='Ciudad' />
+              </div>
+              <div>
+                <Input id="orden" name="orden" type="text" value={formData.orden} onChange={handleInputChange} required className='text-lg' placeholder='Número de orden' />
               </div>
               <div>
                 <Label htmlFor="comentarios" className='text-lg'>Comentarios adicionales</Label>
