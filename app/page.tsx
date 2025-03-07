@@ -131,33 +131,33 @@ export default function Component() {
           <>
             <div className="space-y-4">
               <div>
-                <Label>Información de Contacto</Label>
+                <Label className='text-lg'>Información de Contacto</Label>
                 <div className="mt-2 mb-4">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 text-lg">
                     Por favor completa la siguiente información para continuar.
                   </p>
                 </div>
               </div>
               <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
+                {/* <Label htmlFor="email" className='text-lg'>Email</Label> */}
+                <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required className='text-lg' placeholder='Email' />
               </div>
               <div>
-                <Label htmlFor="telefono">Teléfono</Label>
-                <Input id="telefono" name="telefono" type="tel" value={formData.telefono} onChange={handleInputChange} required />
+                {/* <Label htmlFor="telefono" className='text-lg'>Teléfono</Label> */}
+                <Input id="telefono" name="telefono" type="tel" value={formData.telefono} onChange={handleInputChange} required className='text-lg' placeholder='Teléfono' />
               </div>
               <div>
-                <Label htmlFor="ciudad">Ciudad</Label>
-                <Input id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} required />
+                {/* <Label htmlFor="ciudad" className='text-lg'>Ciudad</Label> */}
+                <Input id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} required className='text-lg' placeholder='Ciudad' />
               </div>
               <div>
-                <Label htmlFor="comentarios">Comentarios adicionales</Label>
+                <Label htmlFor="comentarios" className='text-lg'>Comentarios adicionales</Label>
                 <textarea
                   id="comentarios"
                   name="comentarios"
                   value={formData.comentarios}
                   onChange={handleInputChange}
-                  className="w-full h-32 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-neutral-700"
+                  className="w-full h-32 px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-neutral-700 text-lg"
                   placeholder="Escribe tus comentarios aquí..."
                 />
               </div>
