@@ -84,9 +84,14 @@ export default function Component() {
                     <li>Asegúrate de que tu rostro esté completamente visible</li>
                   </ul>
                 </div>
-                <div className="flex items-center space-x-4 mt-4">
-                  <Button type="button" variant="outline" onClick={openCamera}>
-                    <Camera className="mr-2 h-4 w-4" /> Tomar Selfie
+                <div className="flex justify-center mt-6">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={openCamera}
+                    className="w-full max-w-xs py-9 text-lg bg-[#25D366] text-white hover:bg-[#1DA851] transition-all"
+                  >
+                    <Camera className="mr-2 h-5 w-5" /> Tomar Selfie
                   </Button>
                 </div>
                 {formData.selfie && (
@@ -95,7 +100,16 @@ export default function Component() {
                   </p>
                 )}
               </div>
-              <div>
+              
+            </div>
+          </>
+          
+        )
+      case 2:
+        return (
+          <>
+            <div className="space-y-4">
+            <div>
                 <Label>Información Importante</Label>
                 <div className="mt-2 relative">
                   {selfiePreview ? (
@@ -116,14 +130,6 @@ export default function Component() {
                   </div>
                 </div>
               </div>
-            </div>
-          </>
-          
-        )
-      case 2:
-        return (
-          <>
-            <div className="space-y-4">
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
