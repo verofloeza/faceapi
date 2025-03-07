@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback} from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,17 +24,8 @@ export default function Component() {
     selfie: '',
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
   const [selfiePreview, setSelfiePreview] = useState<string | null>(null)
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [isDarkMode])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
