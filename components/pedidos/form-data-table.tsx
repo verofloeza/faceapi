@@ -11,9 +11,11 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "../ui/dialog"
 
 interface FormData {
   id: string
+  nombre:string
   email: string
   ciudad: string
   telefono: string
+  orden: string
   comentarios: string
   selfie: string
   estado: string
@@ -36,9 +38,11 @@ export function FormDataTable() {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const formDataList: FormData[] = snapshot.docs.map((doc) => ({
         id: doc.id,
+        nombre: doc.data().nombre || "",
         email: doc.data().email || "",
         ciudad: doc.data().ciudad || "",
         telefono: doc.data().telefono || "",
+        orden: doc.data().orden || "",
         comentarios: doc.data().comentarios || "",
         selfie: doc.data().selfie || "",
         estado: doc.data().estado || "",
@@ -72,9 +76,11 @@ export function FormDataTable() {
       const data = doc.data()
       formDataList.push({
         id: doc.id,
+        nombre: data.nombre || "",
         email: data.email || "",
         ciudad: data.ciudad || "",
         telefono: data.telefono || "",
+        orden: data.orden || "",
         comentarios: data.comentarios || "",
         selfie: data.selfie || "",
         estado: data.estado || "",
@@ -137,6 +143,8 @@ export function FormDataTable() {
           <Table>
             <TableHeader className="dark:bg-gray-800">
               <TableRow className="dark:border-gray-700">
+                <TableHead className="dark:text-gray-300">Nro Orden</TableHead>
+                <TableHead className="dark:text-gray-300">Nombre</TableHead>
                 <TableHead className="dark:text-gray-300">Email</TableHead>
                 <TableHead className="dark:text-gray-300">Ciudad</TableHead>
                 <TableHead className="dark:text-gray-300">Teléfono</TableHead>
@@ -149,7 +157,9 @@ export function FormDataTable() {
             <TableBody>
               {formData.map((item) => (
                 <TableRow key={item.id} className="dark:border-gray-700">
-                  <TableCell className="font-medium dark:text-white">{item.email}</TableCell>
+                  <TableCell className="font-medium dark:text-white">{item.orden}</TableCell>
+                  <TableCell className="font-medium dark:text-white">{item.nombre}</TableCell>
+                  <TableCell className="dark:text-gray-300">{item.email}</TableCell>
                   <TableCell className="dark:text-gray-300">{item.ciudad}</TableCell>
                   <TableCell className="dark:text-gray-300">{item.telefono}</TableCell>
                   <TableCell className="max-w-[200px] truncate dark:text-gray-300">{item.comentarios}</TableCell>
