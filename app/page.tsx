@@ -113,18 +113,18 @@ export default function Component() {
                   {selfiePreview ? (
                     <Image
                       src={selfiePreview || "/placeholder.svg"}
-                      alt="Selfie capturado"
+                      alt="Medición pupilar capturada"
                       width={400}
                       height={300}
                       className="rounded-lg"
                     />
                   ) : (
                     <div className="bg-neutral-200 dark:bg-neutral-700 rounded-lg w-full h-[300px] flex items-center justify-center">
-                      <p className="text-gray-500 dark:text-gray-400">No se ha tomado ninguna selfie aún</p>
+                      <p className="text-gray-500 dark:text-gray-400">No se ha tomado ninguna medición pupilar aún</p>
                     </div>
                   )}
                 </div>
-                <p className="mt-4 text-center text-xl">¿Estás conforme con esta selfie? Si no, puedes volver atrás y tomar otra.</p>
+                <p className="mt-4 text-center text-xl">¿Estás conforme con esta medición pupilar? Si no, puedes volver atrás y tomar otra.</p>
               </div>
             </div>
           </>
@@ -223,8 +223,8 @@ export default function Component() {
                     {`PASO ${step} DE 3`}
                   </CardTitle>
                   <p className="text-muted-foreground">
-                    {step === 1 ? 'Tomar Selfie' : 
-                     step === 2 ? 'Revisar Selfie' : 
+                    {step === 1 ? 'Medición Pupilar' : 
+                     step === 2 ? 'Revisar Medición Pupilar' : 
                      'Información de Contacto'}
                   </p>
                 </div>
@@ -262,7 +262,7 @@ export default function Component() {
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent className="max-w-3xl w-full h-auto max-h-screen md:h-[100vh] sm:h-[90vh]">
             <DialogHeader>
-              <DialogTitle>Tomar Selfie</DialogTitle>
+              <DialogTitle>Medición pupilar</DialogTitle>
             </DialogHeader>
             <Page handleSelfieCapture={handleSelfieCapture} />
           </DialogContent>
