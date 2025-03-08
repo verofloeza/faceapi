@@ -13,7 +13,6 @@ interface FormData {
   id: string
   nombre:string
   email: string
-  ciudad: string
   telefono: string
   orden: string
   comentarios: string
@@ -40,7 +39,6 @@ export function FormDataTable() {
         id: doc.id,
         nombre: doc.data().nombre || "",
         email: doc.data().email || "",
-        ciudad: doc.data().ciudad || "",
         telefono: doc.data().telefono || "",
         orden: doc.data().orden || "",
         comentarios: doc.data().comentarios || "",
@@ -78,7 +76,6 @@ export function FormDataTable() {
         id: doc.id,
         nombre: data.nombre || "",
         email: data.email || "",
-        ciudad: data.ciudad || "",
         telefono: data.telefono || "",
         orden: data.orden || "",
         comentarios: data.comentarios || "",
@@ -146,7 +143,6 @@ export function FormDataTable() {
                 <TableHead className="dark:text-gray-300">Nro Orden</TableHead>
                 <TableHead className="dark:text-gray-300">Nombre</TableHead>
                 <TableHead className="dark:text-gray-300">Email</TableHead>
-                <TableHead className="dark:text-gray-300">Ciudad</TableHead>
                 <TableHead className="dark:text-gray-300">Teléfono</TableHead>
                 <TableHead className="dark:text-gray-300">Comentarios</TableHead>
                 <TableHead className="dark:text-gray-300">Selfie</TableHead>
@@ -160,7 +156,6 @@ export function FormDataTable() {
                   <TableCell className="font-medium dark:text-white">{item.orden}</TableCell>
                   <TableCell className="font-medium dark:text-white">{item.nombre}</TableCell>
                   <TableCell className="dark:text-gray-300">{item.email}</TableCell>
-                  <TableCell className="dark:text-gray-300">{item.ciudad}</TableCell>
                   <TableCell className="dark:text-gray-300">{item.telefono}</TableCell>
                   <TableCell className="max-w-[200px] truncate dark:text-gray-300">{item.comentarios}</TableCell>
                   <TableCell>

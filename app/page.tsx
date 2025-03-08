@@ -20,7 +20,6 @@ export default function Component() {
     nombre:'',
     email: '',
     telefono: '',
-    ciudad: '',
     orden:'',
     comentarios: '',
     selfie: '',
@@ -81,7 +80,6 @@ export default function Component() {
                   <ul className="list-disc pl-5 space-y-1 text-xl">
                     <li>Cámara a la altura de los ojos</li>
                     <li>Buena iluminación</li>
-                    <li>Cámara frente al rostro</li>
                     <li>Mira directamente a la cámara</li>
                     <li>Rostro completamente visible</li>
                   </ul>
@@ -151,9 +149,6 @@ export default function Component() {
                 <Input id="telefono" name="telefono" type="tel" value={formData.telefono} onChange={handleInputChange} required className='text-lg' placeholder='Teléfono' />
               </div>
               <div>
-                <Input id="ciudad" name="ciudad" value={formData.ciudad} onChange={handleInputChange} required className='text-lg' placeholder='Ciudad' />
-              </div>
-              <div>
                 <Input id="orden" name="orden" type="text" value={formData.orden} onChange={handleInputChange} required className='text-lg' placeholder='Número de orden' />
               </div>
               <div>
@@ -177,8 +172,8 @@ export default function Component() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.email || !formData.telefono || !formData.ciudad) {
-      alert('Por favor, completa el email, teléfono y ciudad antes de enviar.');
+    if (!formData.email || !formData.telefono || !formData.orden || !formData.nombre) {
+      alert('Por favor, completa el numero de orden, nombre, email, teléfono antes de enviar.');
       return;
     }
     try {
