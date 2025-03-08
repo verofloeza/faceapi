@@ -75,10 +75,11 @@ export default function Component() {
           <>
             <div className="space-y-6">
               <div>
-                <Label htmlFor="selfie">Tomar Selfie</Label>
+                <Label htmlFor="selfie">Medición de distancia pupilar</Label>
                 <div className="mt-2 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
-                  <h3 className="text-lg font-semibold mb-2">Guía para tomar una buena selfie:</h3>
+                  <h3 className="text-lg font-semibold mb-2">Indicaciones a considerar para realizar la medición pupilar:</h3>
                   <ul className="list-disc pl-5 space-y-1 text-xl">
+                    <li>Cámara a la altura de los ojos</li>
                     <li>Buena iluminación</li>
                     <li>Cámara frente al rostro</li>
                     <li>Mira directamente a la cámara</li>
@@ -94,7 +95,7 @@ export default function Component() {
                   >
                    <div className="flex items-center justify-center">
                       <Camera style={{width: '24px', height: '24px', minWidth: '24px', minHeight: '24px'}} className="mr-2" />
-                      <span>Tomar Selfie</span>
+                      <span>Comenzar</span>
                     </div>
                   </Button>
                 </div>

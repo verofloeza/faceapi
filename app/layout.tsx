@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Look Lens",
-  description: "",
+  title: "Look Lens Glasses Center",
+  description: "Centra tus anteojos online",
 };
 
 export default function RootLayout({
