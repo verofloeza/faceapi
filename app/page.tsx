@@ -76,7 +76,7 @@ export default function Component() {
               <div>
                 <Label htmlFor="selfie">Medición de distancia pupilar</Label>
                 <div className="mt-2 p-4 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
-                  <h3 className="text-lg font-semibold mb-2">Indicaciones a considerar para realizar la medición pupilar:</h3>
+                  <h3 className="text-lg font-semibold mb-2">Indicaciones a considerar para el centrado de tus anteojos:</h3>
                   <ul className="list-disc pl-5 space-y-1 text-xl">
                     <li>Cámara a la altura de los ojos</li>
                     <li>Buena iluminación</li>
@@ -106,7 +106,7 @@ export default function Component() {
           <>
             <div className="space-y-4">
               <div>
-                <Label>Tu Selfie</Label>
+                <Label>Tu Medición pupilar</Label>
                 <div className="mt-2 relative">
                   {selfiePreview ? (
                     <Image
@@ -213,18 +213,22 @@ export default function Component() {
           ) : ( 
             <>
               <CardHeader className="flex flex-row items-center justify-between">
-                <div>
+                <div className='w-full'>
                   <CardTitle className="text-2xl font-bold">
-                    {`PASO ${step} DE 3`}
+                  Look Lens Glasses Center
                   </CardTitle>
                   <p className="text-muted-foreground">
-                    {step === 1 ? 'Medición Pupilar' : 
-                     step === 2 ? 'Revisar Medición Pupilar' : 
-                     'Información de Contacto'}
+                  Centra tus anteojos online
                   </p>
                 </div>
               </CardHeader>
               <CardContent>
+              <div>
+                  <CardTitle className="text-lg font-bold">
+                    {`PASO ${step} DE 3`}
+                  </CardTitle>
+                 
+                </div>
                 <Progress value={(step / 3) * 100} className="mb-2" />
                 <form onSubmit={handleSubmit} className="mt-4">
                   {renderStep()}
